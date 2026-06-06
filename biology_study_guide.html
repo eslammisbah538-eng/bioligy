@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology Study Guide — مذكرة الأحياء</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#c9d1d9;font-family:'Segoe UI',Tahoma,sans-serif;font-size:14px;line-height:1.6}
+.header{background:#161b22;border-bottom:1px solid #21262d;padding:14px 20px;position:sticky;top:0;z-index:100}
+.header h1{font-size:16px;color:#e6edf3;font-weight:600;text-align:center}
+.header p{font-size:12px;color:#7d8590;text-align:center;margin-top:2px}
+.tabs{display:flex;gap:6px;padding:12px 16px;background:#0d1117;overflow-x:auto;border-bottom:1px solid #21262d;position:sticky;top:57px;z-index:99}
+.tab{padding:6px 14px;border-radius:20px;border:1px solid #30363d;background:transparent;color:#7d8590;font-size:13px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.tab.active{background:#1f6feb;color:#fff;border-color:#1f6feb}
+.content{padding:14px 16px;max-width:1100px;margin:0 auto}
+.section{display:none}
+.section.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:16px}
+.card{background:#161b22;border:1px solid #21262d;border-radius:10px;padding:14px}
+.card-title{font-size:14px;font-weight:600;color:#e6edf3;margin-bottom:10px;display:flex;align-items:center;gap:6px;padding-bottom:8px;border-bottom:1px solid #21262d}
+.row{margin-bottom:9px}
+.en-label{font-size:11px;font-weight:600;color:#6e7681;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;text-align:left;direction:ltr}
+.en-text{font-size:13px;color:#c9d1d9;line-height:1.5;direction:ltr;text-align:left}
+.fn-text{font-size:13px;color:#58a6ff;line-height:1.5;font-weight:500;direction:ltr;text-align:left}
+.ar-text{font-size:12px;color:#8b949e;line-height:1.5;direction:rtl;text-align:right;margin-top:3px;padding-right:8px;border-right:2px solid #21262d}
+.ar-fn{border-right-color:#1f3a5f;color:#388bfd}
+
+/* Memo */
+.memo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.memo-card{background:#0d2818;border:1px solid #1b4f2f;border-radius:10px;padding:14px}
+.memo-title{font-size:13px;font-weight:600;color:#3fb950;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.memo-body{font-size:13px;color:#79c99b;line-height:1.8;direction:rtl;text-align:right}
+.memo-body b{color:#3fb950}
+.memo-body .en{direction:ltr;display:inline}
+
+/* Compare table */
+.compare-wrap{overflow-x:auto;margin-bottom:16px}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
+.compare-table th{background:#161b22;color:#e6edf3;padding:8px 10px;border:1px solid #21262d;text-align:center;font-weight:600}
+.compare-table td{padding:7px 10px;border:1px solid #21262d;vertical-align:top;text-align:center}
+.compare-table tr:nth-child(even) td{background:#0d1117}
+.compare-table tr:nth-child(odd) td{background:#161b22}
+.compare-table .feature{text-align:right;direction:rtl;color:#7d8590;font-size:12px;min-width:120px}
+.yes{color:#3fb950}
+.no{color:#f85149}
+.special{color:#58a6ff}
+
+/* Quiz */
+.quiz-box{background:#161b22;border:1px solid #21262d;border-radius:10px;padding:16px;max-width:600px;margin:0 auto}
+.q-topic{font-size:11px;color:#3fb950;font-weight:600;margin-bottom:6px;direction:rtl}
+.q-text{font-size:14px;color:#e6edf3;margin-bottom:14px;direction:rtl;text-align:right;line-height:1.6}
+.q-opts{display:flex;flex-direction:column;gap:7px}
+.q-opt{padding:9px 14px;border-radius:8px;border:1px solid #30363d;background:#0d1117;color:#c9d1d9;font-size:13px;cursor:pointer;text-align:left;direction:ltr;transition:all .15s;width:100%}
+.q-opt:hover{border-color:#58a6ff;background:#0d1e33}
+.q-opt.correct{background:#0d2818;border-color:#3fb950;color:#3fb950}
+.q-opt.correct .opt-ar{color:#2a8a40}
+.q-opt.wrong{background:#2d1416;border-color:#f85149;color:#f85149}
+.q-opt.wrong .opt-ar{color:#8a3030}
+.opt-en{font-size:13px;font-weight:500;display:block}
+.opt-ar{font-size:11px;color:#5a6472;direction:rtl;display:block;margin-top:2px;border-right:2px solid #21262d;padding-right:6px;text-align:right}
+.q-text-en{font-size:14px;color:#e6edf3;margin-bottom:4px;direction:ltr;text-align:left;font-weight:500;line-height:1.5}
+.q-text-ar{font-size:12px;color:#5a6472;direction:rtl;text-align:right;margin-bottom:14px;border-right:2px solid #21262d;padding-right:8px;line-height:1.5}
+.feedback{font-size:13px;margin-top:10px;direction:rtl;text-align:right;min-height:18px;color:#7d8590}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.q-score{font-size:13px;color:#7d8590}
+.btn{padding:7px 16px;border-radius:8px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;font-size:13px;cursor:pointer;transition:all .15s}
+.btn:hover{background:#30363d}
+.btn-primary{background:#1f6feb;color:#fff;border-color:#1f6feb}
+.btn-primary:hover{background:#388bfd}
+.progress-bar{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
+.p-dot{width:10px;height:10px;border-radius:50%;background:#21262d;flex-shrink:0}
+.p-dot.done{background:#3fb950}
+.p-dot.active{background:#1f6feb}
+.section-badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;margin-left:6px}
+.badge-org{background:#1f3a5f;color:#58a6ff}
+.badge-tis{background:#2d1b4e;color:#bc8cff}
+.badge-phy{background:#1b4f2f;color:#3fb950}
+.end-box{text-align:center;padding:2rem 1rem;direction:rtl}
+.end-box .big{font-size:40px;margin-bottom:10px}
+.end-box .result{font-size:20px;font-weight:600;color:#e6edf3;margin-bottom:6px}
+.end-box .sub{font-size:14px;color:#7d8590;margin-bottom:20px}
+
+/* Summary cards */
+.sum-card{background:#161b22;border:1px solid #21262d;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.sum-title{font-size:13px;font-weight:600;color:#e6edf3;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #21262d}
+.sum-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;direction:rtl}
+.sum-key{font-size:12px;color:#58a6ff;font-weight:600;min-width:120px;direction:ltr}
+.sum-val{font-size:12px;color:#8b949e;direction:rtl}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;background:#1f3a5f;color:#58a6ff;margin:1px}
+.tag.g{background:#0d2818;color:#3fb950}
+.tag.r{background:#2d1416;color:#f85149}
+.tag.p{background:#2d1b4e;color:#bc8cff}
+h3.sec-header{font-size:14px;font-weight:600;color:#e6edf3;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid #21262d}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🧬 مذكرة الأحياء — Biology Study Guide</h1>
+  <p>عضيات الخلية · الأنسجة · الشعبات (Phyla)</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showSection('organelles')">🔋 عضيات الخلية</button>
+  <button class="tab" onclick="showSection('tissues')">🧫 الأنسجة</button>
+  <button class="tab" onclick="showSection('phyla')">🦑 الشعبات</button>
+  <button class="tab" onclick="showSection('summary')">⚡ الملخص السريع</button>
+  <button class="tab" onclick="showSection('quiz')">✅ اختبر نفسك</button>
+</div>
+
+<!-- ===================== ORGANELLES ===================== -->
+<div id="organelles" class="section active content">
+<h3 class="sec-header">🔋 عضيات الخلية — Cell Organelles</h3>
+<div class="grid">
+
+  <div class="card">
+    <div class="card-title">🟢 Mitochondria</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Double-membrane organelle — the powerhouse of the cell.</div><div class="ar-text">عضية ذات غشاءين — محطة طاقة الخلية.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Outer membrane + inner folded membrane (cristae) + matrix inside.</div><div class="ar-text">غشاء خارجي + غشاء داخلي مطوي (كريستا) + مصفوفة بالداخل.</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Produces ATP energy by cellular respiration.</div><div class="ar-text ar-fn">تُنتج طاقة ATP عن طريق التنفس الخلوي.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚪ Ribosome</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Tiny non-membrane organelle made of rRNA + protein.</div><div class="ar-text">عضية صغيرة بدون غشاء من rRNA + بروتين.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Two subunits (large + small). Free in cytoplasm or on rough ER.</div><div class="ar-text">وحدتان فرعيتان (كبيرة + صغيرة). حرة أو على ER الخشن.</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Protein synthesis (translation).</div><div class="ar-text ar-fn">تصنيع البروتين (ترجمة).</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📦 Golgi Apparatus</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Stack of flattened membranes (cisternae).</div><div class="ar-text">طبقات أغشية مسطحة (صهاريج).</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Cis face (receives) → Trans face (ships out). Produces vesicles.</div><div class="ar-text">Cis يستقبل ← Trans يُرسل. ينتج حويصلات.</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Processes, packages, and secretes proteins and lipids.</div><div class="ar-text ar-fn">يعالج ويعبّئ ويُفرز البروتينات والدهون.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔀 Endoplasmic Reticulum (ER)</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Network of membranes connected to the nucleus.</div><div class="ar-text">شبكة أغشية متصلة بالنواة.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Rough ER (has ribosomes) + Smooth ER (no ribosomes).</div><div class="ar-text">ER خشن (بريبوسومات) + ER ناعم (بدون).</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Rough → proteins. Smooth → lipids + detox.</div><div class="ar-text ar-fn">الخشن ← بروتينات. الناعم ← دهون + إزالة سموم.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🟡 Lysosome</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Membrane sac filled with digestive enzymes.</div><div class="ar-text">كيس غشائي مليء بإنزيمات هاضمة.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Single membrane, acidic inside (pH ~5).</div><div class="ar-text">غشاء واحد، حمضي من الداخل (pH ~5).</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Digests waste, old organelles, and foreign particles.</div><div class="ar-text ar-fn">يهضم الفضلات والعضيات القديمة والجسيمات الغريبة.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔵 Nucleus</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Control center of the cell.</div><div class="ar-text">مركز التحكم في الخلية.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Nuclear envelope (double membrane) + pores + nucleolus + chromatin (DNA).</div><div class="ar-text">غلاف نووي (غشاءين) + مسام + نوية + كروماتين (DNA).</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Stores DNA, controls cell, produces rRNA in nucleolus.</div><div class="ar-text ar-fn">يخزّن DNA، يتحكم في الخلية، ينتج rRNA في النوية.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚙️ Centriole</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Cylindrical structure made of microtubules.</div><div class="ar-text">تركيب أسطواني من أنابيب دقيقة.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">9 triplets of microtubules arranged in a ring.</div><div class="ar-text">9 ثلاثيات من الأنابيب الدقيقة في حلقة.</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Forms spindle fibers during cell division.</div><div class="ar-text ar-fn">يُكوّن خيوط المغزل أثناء انقسام الخلية.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💧 Vacuole</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Membrane-bound sac for storage.</div><div class="ar-text">كيس غشائي للتخزين.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Single membrane (tonoplast). Large in plants, small in animals.</div><div class="ar-text">غشاء واحد (توناوبلاست). كبير في النبات، صغير في الحيوان.</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Stores water, waste, food, or ions.</div><div class="ar-text ar-fn">يخزّن الماء والفضلات والغذاء والأيونات.</div></div>
+  </div>
+
+</div>
+
+<div class="memo-grid">
+  <div class="memo-card">
+    <div class="memo-title">🧠 الغشاء — كم غشاء؟</div>
+    <div class="memo-body">
+      <b>غشاءين:</b> Mitochondria + Nucleus<br>
+      <b>غشاء واحد:</b> Lysosome + Vacuole + Golgi (حويصلاته)<br>
+      <b>بدون غشاء:</b> Ribosome + Centriole
+    </div>
+  </div>
+  <div class="memo-card">
+    <div class="memo-title">🔤 جملة الحفظ: M R G E L N C V</div>
+    <div class="memo-body"><b>"ميتو ريبو جولجي إندو ليزو نواة سنتريول فاكيول"</b><br>كل حرف = عضية!</div>
+  </div>
+</div>
+</div>
+
+<!-- ===================== TISSUES ===================== -->
+<div id="tissues" class="section content">
+<h3 class="sec-header">🧫 الأنسجة — Animal Tissues</h3>
+<div class="grid">
+
+  <div class="card">
+    <div class="card-title" style="color:#bc8cff">🔲 Epithelial Tissue — نسيج طلائي</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Sheets of tightly packed cells lining body surfaces and cavities.</div><div class="ar-text">طبقات من خلايا متراصة تُبطّن أسطح الجسم والتجاويف.</div></div>
+    <div class="row"><div class="en-label">Key Features</div><div class="en-text">NO matrix • NO blood vessels • Cells tightly packed • Has basement membrane.</div><div class="ar-text">بدون مصفوفة • بدون أوعية دموية • خلايا متراصة • له غشاء قاعدي.</div></div>
+    <div class="row"><div class="en-label">Types</div><div class="en-text">Simple (1 layer) vs Stratified (multiple layers). Squamous / Cuboidal / Columnar.</div><div class="ar-text">بسيط (طبقة واحدة) vs متعدد الطبقات. حرشفي / مكعبي / عمودي.</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Protection, absorption, secretion, sensation.</div><div class="ar-text ar-fn">الحماية، الامتصاص، الإفراز، الإحساس.</div></div>
+    <div class="row"><div class="en-label">Examples</div><div class="en-text">Skin (stratified squamous), intestinal lining (simple columnar), kidney tubules (cuboidal).</div><div class="ar-text">الجلد، بطانة الأمعاء، أنابيب الكلى.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#bc8cff">🔶 Connective Tissue — نسيج ضام</div>
+    <div class="row"><div class="en-label">Def</div><div class="en-text">Tissue that connects, supports, and binds other tissues.</div><div class="ar-text">نسيج يربط ويدعم ويوصل الأنسجة الأخرى.</div></div>
+    <div class="row"><div class="en-label">Key Features</div><div class="en-text">HAS matrix (extracellular) • HAS blood vessels • Scattered cells in matrix.</div><div class="ar-text">له مصفوفة خارج خلوية • له أوعية دموية • خلايا مبعثرة في المصفوفة.</div></div>
+    <div class="row"><div class="en-label">Types</div><div class="en-text">Loose CT • Dense CT • Cartilage • Bone • Blood.</div><div class="ar-text">ضام رخو • ضام كثيف • غضروف • عظم • دم.</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Support, bind, transport (blood), store fat (adipose).</div><div class="ar-text ar-fn">الدعم، الربط، النقل (الدم)، تخزين الدهون (الدهني).</div></div>
+    <div class="row"><div class="en-label">Examples</div><div class="en-text">Tendons (dense), cartilage, bone, adipose tissue, blood.</div><div class="ar-text">الأوتار، الغضروف، العظم، الدهون، الدم.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#bc8cff">💪 Muscle Tissue — نسيج عضلي</div>
+    <div class="row"><div class="en-label">Types</div><div class="en-text">1. Skeletal (striated, voluntary) — 2. Cardiac (striated, involuntary, branched) — 3. Smooth (non-striated, involuntary).</div><div class="ar-text">١. هيكلي (مخطط، إرادي) — ٢. قلبي (مخطط، لا إرادي، متفرع) — ٣. أملس (غير مخطط، لا إرادي).</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Movement, pumping blood (cardiac), peristalsis (smooth).</div><div class="ar-text ar-fn">الحركة، ضخ الدم (القلبي)، التمعج (الأملس).</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#bc8cff">⚡ Nervous Tissue — نسيج عصبي</div>
+    <div class="row"><div class="en-label">Cells</div><div class="en-text">Neurons (transmit signals) + Glial cells (support, protect neurons).</div><div class="ar-text">خلايا عصبية (تنقل الإشارات) + خلايا دبقية (تدعم وتحمي العصبية).</div></div>
+    <div class="row"><div class="en-label">Structure of Neuron</div><div class="en-text">Dendrites (receive) → Cell body → Axon (transmit) → Synapse.</div><div class="ar-text">تشعبات (تستقبل) ← جسم الخلية ← محور (ينقل) ← متشابك عصبي.</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Transmit electrical signals throughout the body.</div><div class="ar-text ar-fn">نقل الإشارات الكهربائية في الجسم.</div></div>
+  </div>
+
+</div>
+
+<h3 class="sec-header">⚡ الفرق الأساسي — The KEY difference</h3>
+<div class="compare-wrap">
+<table class="compare-table">
+  <tr><th>الخاصية / Feature</th><th>Epithelial 🔲</th><th>Connective 🔶</th><th>Muscle 💪</th><th>Nervous ⚡</th></tr>
+  <tr><td class="feature">مصفوفة / Matrix</td><td class="no">✗ لا</td><td class="yes">✓ نعم</td><td class="no">✗ لا</td><td class="no">✗ لا</td></tr>
+  <tr><td class="feature">أوعية دموية / Vessels</td><td class="no">✗ لا</td><td class="yes">✓ نعم</td><td class="yes">✓ نعم</td><td class="yes">✓ نعم</td></tr>
+  <tr><td class="feature">خلايا متراصة / Packed cells</td><td class="yes">✓ جداً</td><td class="no">✗ مبعثرة</td><td class="yes">✓ نعم</td><td class="special">متخصصة</td></tr>
+  <tr><td class="feature">الوظيفة الرئيسية</td><td class="special">Lining / Protection</td><td class="special">Support / Bind</td><td class="special">Movement</td><td class="special">Signal Transmission</td></tr>
+</table>
+</div>
+
+<div class="memo-grid">
+  <div class="memo-card">
+    <div class="memo-title">💡 الجملة الذهبية</div>
+    <div class="memo-body">
+      <b>Epithelial = NMTV</b><br>
+      No Matrix, Tightly packed, no Vessels<br>
+      <b>الطلائي = لا مصفوفة، لا أوعية، خلايا متراصة</b>
+    </div>
+  </div>
+  <div class="memo-card">
+    <div class="memo-title">🎯 تذكر العضلة القلبية</div>
+    <div class="memo-body">
+      الوحيدة <b>مخططة + لا إرادية + متفرعة</b><br>
+      Striated + Involuntary + Branched = Cardiac only!
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===================== PHYLA ===================== -->
+<div id="phyla" class="section content">
+<h3 class="sec-header">🦑 شعبات المملكة الحيوانية — Animal Phyla</h3>
+<div class="grid">
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950">🟤 Porifera — المسامية (الإسفنج)</div>
+    <div class="row"><div class="en-label">Key ID</div><div class="en-text">Body full of pores (ostia). No true tissues or organs.</div><div class="ar-text">الجسم مليء بالمسام. لا أنسجة حقيقية ولا أعضاء.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Asymmetrical. Choanocytes (collar cells) create water flow. Spicules for support.</div><div class="ar-text">بلا تناسق. خلايا ياقوية تُحدث تيار مائي. شوكيات للدعم.</div></div>
+    <div class="row"><div class="en-label">Coelom</div><div class="en-text">Acoelomate (no coelom).</div><div class="ar-text">لا تجوف (acoelomate).</div></div>
+    <div class="row"><div class="en-label">Function</div><div class="fn-text">Filter feeders — water in through pores, out through osculum.</div><div class="ar-text ar-fn">تتغذى بالترشيح — ماء يدخل من المسام ويخرج من الفتحة العلوية.</div></div>
+    <div class="row"><div class="en-label">Memory 🧠</div><div class="en-text">Sponge = Pores everywhere, no true tissues, collar cells!</div><div class="ar-text">الإسفنج = مسام في كل مكان، بدون أنسجة حقيقية!</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950">🪼 Cnidaria — اللاسعات</div>
+    <div class="row"><div class="en-label">Key ID</div><div class="en-text">Stinging cells (nematocysts) + Radial symmetry.</div><div class="ar-text">خلايا لاسعة (نيماتوسيست) + تناسق شعاعي.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">2 body layers (diploblastic): ectoderm + endoderm. Gastrovascular cavity.</div><div class="ar-text">طبقتان جسميتان: أديم خارجي + أديم داخلي. تجويف معدي وعائي.</div></div>
+    <div class="row"><div class="en-label">Coelom</div><div class="en-text">Acoelomate (no true coelom).</div><div class="ar-text">لا تجوف حقيقي.</div></div>
+    <div class="row"><div class="en-label">Examples</div><div class="en-text">Jellyfish (medusa), Sea anemone & Coral (polyp).</div><div class="ar-text">قنديل البحر (ميدوزا)، شقائق النعمان والمرجان (بوليب).</div></div>
+    <div class="row"><div class="en-label">Memory 🧠</div><div class="en-text">C = Sting Cells + raDialsymmetry → Jellyfish!</div><div class="ar-text">اللاسعات = خلايا لاسعة + تناسق شعاعي = قنديل البحر!</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950">🪱 Platyhelminthes — الديدان المفلطحة</div>
+    <div class="row"><div class="en-label">Key ID</div><div class="en-text">Flat body + No coelom (acoelomate) + Flame cells for excretion.</div><div class="ar-text">جسم مفلطح + لا تجوف + خلايا لهبية للإخراج.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Triploblastic (3 layers). Bilateral symmetry. Incomplete digestive system.</div><div class="ar-text">ثلاثي الطبقات. تناسق ثنائي. جهاز هضمي غير كامل.</div></div>
+    <div class="row"><div class="en-label">Coelom</div><div class="en-text">Acoelomate — no body cavity.</div><div class="ar-text">لا تجوف — بدون تجويف جسمي.</div></div>
+    <div class="row"><div class="en-label">Examples</div><div class="en-text">Tapeworm, Planaria, Liver fluke.</div><div class="ar-text">الديدان الشريطية، البلاناريا، الديدان الكبدية.</div></div>
+    <div class="row"><div class="en-label">Memory 🧠</div><div class="en-text">FLAT + FLAME + no coelom = Platyhelminthes!</div><div class="ar-text">مفلطح + خلية لهبية + لا تجوف = ديدان مفلطحة!</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950">🔵 Nematoda — الديدان الأسطوانية</div>
+    <div class="row"><div class="en-label">Key ID</div><div class="en-text">Round worms + Pseudocoelom + Cuticle (tough outer layer).</div><div class="ar-text">ديدان مستديرة + تجوف كاذب + كيوتيكل (طبقة خارجية صلبة).</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Triploblastic. Complete digestive system (mouth + anus). Bilateral symmetry.</div><div class="ar-text">ثلاثي الطبقات. جهاز هضمي كامل (فم + فتحة شرجية). تناسق ثنائي.</div></div>
+    <div class="row"><div class="en-label">Coelom</div><div class="en-text">Pseudocoelomate — false body cavity (not lined by mesoderm).</div><div class="ar-text">تجوف كاذب — لا يبطّنه الأديم المتوسط.</div></div>
+    <div class="row"><div class="en-label">Examples</div><div class="en-text">Roundworm (Ascaris), Pinworm, C. elegans.</div><div class="ar-text">الإسكارس، دودة الدبوس، C. elegans.</div></div>
+    <div class="row"><div class="en-label">Memory 🧠</div><div class="en-text">ROUND + PSEUDO + CUTICLE = Nematoda!</div><div class="ar-text">مستديرة + كاذب + كيوتيكل = نيماتودا!</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950">🪱 Annelida — الديدان الحلقية</div>
+    <div class="row"><div class="en-label">Key ID</div><div class="en-text">Segmented body + True coelom + Nephridia (excretory organs).</div><div class="ar-text">جسم مقطّع + تجوف حقيقي + نيفريديا (أعضاء إخراجية).</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Triploblastic. Closed circulatory system. Chaetae (bristles) in most.</div><div class="ar-text">ثلاثي الطبقات. دورة دموية مغلقة. شعيرات (حريشيات) في معظمها.</div></div>
+    <div class="row"><div class="en-label">Coelom</div><div class="en-text">True coelomate — coelom fully lined by mesoderm.</div><div class="ar-text">تجوف حقيقي — مبطّن بالكامل بالأديم المتوسط.</div></div>
+    <div class="row"><div class="en-label">Examples</div><div class="en-text">Earthworm, Leech, Polychaetes (marine worms).</div><div class="ar-text">دودة الأرض، العلقة، البولكيتات (ديدان بحرية).</div></div>
+    <div class="row"><div class="en-label">Memory 🧠</div><div class="en-text">SEGMENTS + TRUE coelom + NEPHRIDIA = Annelida!</div><div class="ar-text">حلقات + تجوف حقيقي + نيفريديا = حلقية!</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950">🐌 Mollusca — الرخويات</div>
+    <div class="row"><div class="en-label">Key ID</div><div class="en-text">Soft body + Mantle + Radula (feeding organ) + Shell (usually).</div><div class="ar-text">جسم رخو + وشاح + رادولا (عضو تغذية) + صدفة (عادةً).</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Triploblastic. True coelom. Open circulatory system (except Cephalopoda).</div><div class="ar-text">ثلاثي الطبقات. تجوف حقيقي. دورة دموية مفتوحة (عدا الرأسقدميات).</div></div>
+    <div class="row"><div class="en-label">Coelom</div><div class="en-text">True coelomate.</div><div class="ar-text">تجوف حقيقي.</div></div>
+    <div class="row"><div class="en-label">Examples</div><div class="en-text">Snail (gastropod), Clam (bivalve), Octopus/Squid (cephalopod).</div><div class="ar-text">الحلزون، المحار، الأخطبوط والحبّار (رأسقدميات).</div></div>
+    <div class="row"><div class="en-label">Memory 🧠</div><div class="en-text">MANTLE + RADULA + SHELL = Mollusca!</div><div class="ar-text">وشاح + رادولا + صدفة = رخويات!</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950">🦗 Arthropoda — مفصليات الأرجل</div>
+    <div class="row"><div class="en-label">Key ID</div><div class="en-text">Exoskeleton (chitin) + Jointed appendages + Open circulatory system.</div><div class="ar-text">هيكل خارجي (كيتين) + زوائد مفصلية + دورة دموية مفتوحة.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Triploblastic. True coelom. Segmented body. Compound eyes.</div><div class="ar-text">ثلاثي الطبقات. تجوف حقيقي. جسم مقطّع. عيون مركبة.</div></div>
+    <div class="row"><div class="en-label">Classes</div><div class="en-text">Insecta (6 legs) • Arachnida (8 legs) • Crustacea (10+ legs) • Myriapoda (many legs).</div><div class="ar-text">الحشرات (6 أرجل) • العنكبوتيات (8) • القشريات (10+) • كثيرات الأرجل.</div></div>
+    <div class="row"><div class="en-label">Memory 🧠</div><div class="en-text">EXOSKELETON + JOINTED legs = Arthropoda! Largest phylum!</div><div class="ar-text">هيكل خارجي + أرجل مفصلية = مفصليات! أكبر شعبة!</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#3fb950">⭐ Echinodermata — شوكيات الجلد</div>
+    <div class="row"><div class="en-label">Key ID</div><div class="en-text">Water vascular system + Radial symmetry (adults) + Spiny skin.</div><div class="ar-text">جهاز وعائي مائي + تناسق شعاعي (البالغ) + جلد شائك.</div></div>
+    <div class="row"><div class="en-label">Structure</div><div class="en-text">Triploblastic. True coelom. Deuterostomes. Tube feet for movement.</div><div class="ar-text">ثلاثي الطبقات. تجوف حقيقي. ثانويات الفم. أقدام أنبوبية للحركة.</div></div>
+    <div class="row"><div class="en-label">Coelom</div><div class="en-text">True coelomate. No head, no brain.</div><div class="ar-text">تجوف حقيقي. بلا رأس، بلا دماغ.</div></div>
+    <div class="row"><div class="en-label">Examples</div><div class="en-text">Starfish, Sea urchin, Sea cucumber, Brittle star.</div><div class="ar-text">نجم البحر، قنفذ البحر، خيار البحر، أفيورا.</div></div>
+    <div class="row"><div class="en-label">Memory 🧠</div><div class="en-text">WATER VASCULAR + SPINY + RADIAL = Echinodermata!</div><div class="ar-text">جهاز مائي + أشواك + شعاعي = شوكيات!</div></div>
+  </div>
+
+</div>
+
+<h3 class="sec-header">⚡ مقارنة سريعة — Quick Comparison Table</h3>
+<div class="compare-wrap">
+<table class="compare-table">
+  <tr><th>الشعبة / Phylum</th><th>Symmetry</th><th>Coelom</th><th>Special Feature</th><th>Examples</th></tr>
+  <tr><td class="special">Porifera</td><td>Asymmetrical</td><td class="no">None</td><td>Pores + Choanocytes</td><td>Sponge</td></tr>
+  <tr><td class="special">Cnidaria</td><td>Radial</td><td class="no">None</td><td class="yes">Nematocysts (stinging)</td><td>Jellyfish</td></tr>
+  <tr><td class="special">Platyhelminthes</td><td>Bilateral</td><td class="no">Acoelomate</td><td class="yes">Flat + Flame cells</td><td>Tapeworm</td></tr>
+  <tr><td class="special">Nematoda</td><td>Bilateral</td><td class="special">Pseudo</td><td class="yes">Cuticle + Round</td><td>Roundworm</td></tr>
+  <tr><td class="special">Annelida</td><td>Bilateral</td><td class="yes">True</td><td class="yes">Segments + Nephridia</td><td>Earthworm</td></tr>
+  <tr><td class="special">Mollusca</td><td>Bilateral</td><td class="yes">True</td><td class="yes">Mantle + Radula</td><td>Snail, Octopus</td></tr>
+  <tr><td class="special">Arthropoda</td><td>Bilateral</td><td class="yes">True</td><td class="yes">Exoskeleton + Jointed</td><td>Insects, Spiders</td></tr>
+  <tr><td class="special">Echinodermata</td><td>Radial (adult)</td><td class="yes">True</td><td class="yes">Water vascular system</td><td>Starfish</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ===================== SUMMARY ===================== -->
+<div id="summary" class="section content">
+<h3 class="sec-header">⚡ الملخص السريع — Quick Reference</h3>
+
+<h3 class="sec-header" style="font-size:12px;color:#58a6ff">🔋 عضيات الخلية</h3>
+<div class="sum-card">
+  <div class="sum-row"><span class="sum-key">Mitochondria</span><span class="sum-val">طاقة ATP • غشاءين • كريستا</span></div>
+  <div class="sum-row"><span class="sum-key">Ribosome</span><span class="sum-val">بروتين • بدون غشاء • rRNA+protein</span></div>
+  <div class="sum-row"><span class="sum-key">Golgi</span><span class="sum-val">يعبّئ ويرسل • Cis→Trans • حويصلات</span></div>
+  <div class="sum-row"><span class="sum-key">ER (Rough)</span><span class="sum-val">بروتينات • عليه ريبوسومات</span></div>
+  <div class="sum-row"><span class="sum-key">ER (Smooth)</span><span class="sum-val">دهون + detox • بدون ريبوسومات</span></div>
+  <div class="sum-row"><span class="sum-key">Lysosome</span><span class="sum-val">يهضم فضلات • pH~5 • غشاء واحد</span></div>
+  <div class="sum-row"><span class="sum-key">Nucleus</span><span class="sum-val">DNA + rRNA • غشاءين • مدير الخلية</span></div>
+  <div class="sum-row"><span class="sum-key">Centriole</span><span class="sum-val">خيوط المغزل • 9 ثلاثيات • بدون غشاء</span></div>
+  <div class="sum-row"><span class="sum-key">Vacuole</span><span class="sum-val">تخزين • كبير في النبات • غشاء واحد</span></div>
+</div>
+
+<h3 class="sec-header" style="font-size:12px;color:#bc8cff">🧫 الأنسجة</h3>
+<div class="sum-card">
+  <div class="sum-row"><span class="sum-key">Epithelial</span><span class="sum-val"><span class="tag r">لا مصفوفة</span><span class="tag r">لا أوعية</span><span class="tag g">متراصة</span> حماية، إفراز</span></div>
+  <div class="sum-row"><span class="sum-key">Connective</span><span class="sum-val"><span class="tag g">مصفوفة</span><span class="tag g">أوعية</span><span class="tag r">مبعثرة</span> دعم، ربط</span></div>
+  <div class="sum-row"><span class="sum-key">Muscle</span><span class="sum-val"><span class="tag p">هيكلي=إرادي</span><span class="tag p">قلبي=لاإرادي+متفرع</span><span class="tag p">أملس=لاإرادي</span></span></div>
+  <div class="sum-row"><span class="sum-key">Nervous</span><span class="sum-val">نيورون (Dendrites→Cell body→Axon) + خلايا دبقية</span></div>
+</div>
+
+<h3 class="sec-header" style="font-size:12px;color:#3fb950">🦑 الشعبات — كلمة مفتاحية لكل شعبة</h3>
+<div class="sum-card">
+  <div class="sum-row"><span class="sum-key">Porifera</span><span class="sum-val"><span class="tag g">مسام</span><span class="tag g">خلايا ياقوية</span><span class="tag r">لا أنسجة</span></span></div>
+  <div class="sum-row"><span class="sum-key">Cnidaria</span><span class="sum-val"><span class="tag g">نيماتوسيست</span><span class="tag g">تناسق شعاعي</span><span class="tag r">لا تجوف</span></span></div>
+  <div class="sum-row"><span class="sum-key">Platyhelminthes</span><span class="sum-val"><span class="tag g">مفلطح</span><span class="tag g">خلية لهبية</span><span class="tag r">لا تجوف</span></span></div>
+  <div class="sum-row"><span class="sum-key">Nematoda</span><span class="sum-val"><span class="tag g">مستدير</span><span class="tag g">كيوتيكل</span><span class="tag p">تجوف كاذب</span></span></div>
+  <div class="sum-row"><span class="sum-key">Annelida</span><span class="sum-val"><span class="tag g">حلقات</span><span class="tag g">نيفريديا</span><span class="tag g">تجوف حقيقي</span></span></div>
+  <div class="sum-row"><span class="sum-key">Mollusca</span><span class="sum-val"><span class="tag g">وشاح</span><span class="tag g">رادولا</span><span class="tag g">صدفة</span></span></div>
+  <div class="sum-row"><span class="sum-key">Arthropoda</span><span class="sum-val"><span class="tag g">هيكل خارجي</span><span class="tag g">أرجل مفصلية</span><span class="tag g">أكبر شعبة</span></span></div>
+  <div class="sum-row"><span class="sum-key">Echinodermata</span><span class="sum-val"><span class="tag g">جهاز مائي</span><span class="tag g">شوكي</span><span class="tag g">نجم البحر</span></span></div>
+</div>
+
+<div class="memo-grid">
+  <div class="memo-card">
+    <div class="memo-title">🔤 ترتيب الشعبات من بدائي لمتطور</div>
+    <div class="memo-body"><b>P-C-P-N-A-M-A-E</b><br>
+    Porifera → Cnidaria → Platyhelminthes → Nematoda → Annelida → Mollusca → Arthropoda → Echinodermata<br><br>
+    جملة: <b>"فور سي بلا نيماتود — آنيل مول آرث إيكينو"</b></div>
+  </div>
+  <div class="memo-card">
+    <div class="memo-title">🎯 التجوف — 3 حالات فقط</div>
+    <div class="memo-body">
+      <b>لا تجوف (Acoelomate):</b> Porifera + Cnidaria + Platyhelminthes<br>
+      <b>تجوف كاذب (Pseudo):</b> Nematoda فقط<br>
+      <b>تجوف حقيقي (True):</b> Annelida + Mollusca + Arthropoda + Echinodermata
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===================== QUIZ ===================== -->
+<div id="quiz" class="section content">
+<div class="quiz-box" id="quiz-box">
+  <div class="progress-bar" id="prog-bar"></div>
+  <div class="q-topic" id="q-topic"></div>
+  <div class="q-text" id="q-text"></div>
+  <div class="q-opts" id="q-opts"></div>
+  <div class="feedback" id="feedback"></div>
+  <div class="quiz-nav">
+    <span class="q-score" id="q-score">النتيجة: 0 / 0</span>
+    <button class="btn btn-primary" id="next-btn" onclick="nextQ()">التالي ←</button>
+  </div>
+</div>
+</div>
+
+<script>
+const ALL_Q = [
+  // ── ORGANELLES ──
+  {
+    t:"🔋 Cell Organelles — عضيات الخلية",
+    q:"Which organelle produces ATP energy through cellular respiration?",
+    qa:"أي عضية تُنتج طاقة ATP عن طريق التنفس الخلوي؟",
+    o:["Ribosome","Mitochondria","Nucleus","Golgi Apparatus"],
+    oa:["ريبوسوم","ميتوكوندريا","النواة","جهاز جولجي"],
+    a:1, h:"محطة الكهرباء = Mitochondria 🔋"
+  },
+  {
+    t:"🔋 Cell Organelles — عضيات الخلية",
+    q:"What is the main function of the Ribosome?",
+    qa:"ما الوظيفة الرئيسية للـ Ribosome؟",
+    o:["Produce ATP","Digest waste","Protein synthesis (translation)","Store water"],
+    oa:["إنتاج ATP","هضم الفضلات","تصنيع البروتين (الترجمة)","تخزين الماء"],
+    a:2, h:"Ribosome = مصنع البروتين 🏭"
+  },
+  {
+    t:"🔋 Cell Organelles — عضيات الخلية",
+    q:"The Golgi Apparatus functions like a...?",
+    qa:"الـ Golgi Apparatus يشبه في وظيفته...؟",
+    o:["Power station","Delivery company (DHL)","Garbage bin","Water tank"],
+    oa:["محطة كهرباء","شركة توصيل (DHL)","سلة مهملات","خزان مياه"],
+    a:1, h:"بيستقبل ويعبّئ ويبعت زي DHL 📦"
+  },
+  {
+    t:"🔋 Cell Organelles — عضيات الخلية",
+    q:"Which organelle has a double membrane (two membranes)?",
+    qa:"أي عضية تحتوي على غشاءين؟",
+    o:["Lysosome","Vacuole","Mitochondria","Ribosome"],
+    oa:["ليزوسوم","فجوة","ميتوكوندريا","ريبوسوم"],
+    a:2, h:"Mitochondria و Nucleus الاتنين عندهم غشاءين"
+  },
+  {
+    t:"🔋 Cell Organelles — عضيات الخلية",
+    q:"How does Rough ER differ from Smooth ER?",
+    qa:"كيف يختلف الـ Rough ER عن الـ Smooth ER؟",
+    o:["It is larger in size","It has ribosomes on its surface","It produces lipids","It stores water"],
+    oa:["أكبر حجماً","يحتوي ريبوسومات على سطحه","يصنع الدهون","يخزّن الماء"],
+    a:1, h:"الريبوسومات على سطحه هي اللي بتعمله خشن 🔀"
+  },
+  {
+    t:"🔋 Cell Organelles — عضيات الخلية",
+    q:"Which organelle has NO membrane at all?",
+    qa:"أي عضية بدون غشاء تماماً؟",
+    o:["Lysosome","Golgi Apparatus","Ribosome","Vacuole"],
+    oa:["ليزوسوم","جهاز جولجي","ريبوسوم","فجوة"],
+    a:2, h:"Ribosome و Centriole الاتنين بدون غشاء ⚪"
+  },
+  {
+    t:"🔋 Cell Organelles — عضيات الخلية",
+    q:"The environment inside the Lysosome is...?",
+    qa:"البيئة داخل الـ Lysosome هي...؟",
+    o:["Basic — pH ~9","Neutral — pH ~7","Acidic — pH ~5","Strongly basic — pH ~12"],
+    oa:["قاعدية — pH ~9","محايدة — pH ~7","حمضية — pH ~5","قاعدية جداً — pH ~12"],
+    a:2, h:"حمضي عشان الإنزيمات الهاضمة تشتغل 🟡"
+  },
+  {
+    t:"🔋 Cell Organelles — عضيات الخلية",
+    q:"Which organelle forms the spindle fibers during cell division?",
+    qa:"أي عضية تُكوّن خيوط المغزل أثناء انقسام الخلية؟",
+    o:["Nucleus","Ribosome","Centriole","Vacuole"],
+    oa:["النواة","ريبوسوم","سنتريول","فجوة"],
+    a:2, h:"Centriole = عمود الخيمة ⚙️"
+  },
+  // ── TISSUES ──
+  {
+    t:"🧫 Tissues — الأنسجة",
+    q:"Which tissue lacks BOTH blood vessels AND a matrix?",
+    qa:"أي نسيج يفتقر إلى الأوعية الدموية والمصفوفة معاً؟",
+    o:["Connective tissue","Muscle tissue","Epithelial tissue","Nervous tissue"],
+    oa:["النسيج الضام","النسيج العضلي","النسيج الطلائي","النسيج العصبي"],
+    a:2, h:"Epithelial = No matrix, No vessels, Tightly packed 🔲"
+  },
+  {
+    t:"🧫 Tissues — الأنسجة",
+    q:"What is the KEY feature that defines Connective tissue?",
+    qa:"ما الميزة الأساسية التي تُعرّف النسيج الضام؟",
+    o:["Tightly packed cells","Extracellular matrix + blood vessels","No blood vessels","No basement membrane"],
+    oa:["خلايا متراصة جداً","مصفوفة خارج خلوية + أوعية دموية","بدون أوعية دموية","بدون غشاء قاعدي"],
+    a:1, h:"Connective = HAS matrix + HAS vessels ✅"
+  },
+  {
+    t:"🧫 Tissues — الأنسجة",
+    q:"Which muscle type is striated, involuntary, AND branched — all three?",
+    qa:"أي نوع عضلة يكون مخططاً ولا إرادياً ومتفرعاً في نفس الوقت؟",
+    o:["Skeletal muscle (voluntary)","Smooth muscle (non-striated)","Cardiac muscle","All of the above"],
+    oa:["العضلة الهيكلية (إرادية)","العضلة الأملس (غير مخططة)","العضلة القلبية","كل ما سبق"],
+    a:2, h:"الوحيدة اللي عندها الثلاثة = Cardiac muscle ❤️"
+  },
+  {
+    t:"🧫 Tissues — الأنسجة",
+    q:"What is the specialized cell that transmits electrical signals called?",
+    qa:"ما اسم الخلية المتخصصة التي تنقل الإشارات الكهربائية؟",
+    o:["Choanocyte","Neuron","Fibroblast","Osteocyte"],
+    oa:["خلية ياقوية","خلية عصبية (نيورون)","خلية ليفية","خلية عظمية"],
+    a:1, h:"Neuron = خلية عصبية ⚡"
+  },
+  // ── PHYLA ──
+  {
+    t:"🦑 Animal Phyla — الشعبات",
+    q:"Which phylum contains stinging cells called nematocysts?",
+    qa:"أي شعبة تحتوي على خلايا لاسعة تُسمى nematocysts؟",
+    o:["Porifera","Platyhelminthes","Cnidaria","Nematoda"],
+    oa:["المسامية (الإسفنج)","الديدان المفلطحة","اللاسعات","الديدان الأسطوانية"],
+    a:2, h:"Cnidaria = اللاسعات 🪼 قنديل البحر + تناسق شعاعي"
+  },
+  {
+    t:"🦑 Animal Phyla — الشعبات",
+    q:"Platyhelminthes (flatworms) use _______ for excretion.",
+    qa:"الديدان المفلطحة تستخدم _______ للإخراج.",
+    o:["Nephridia","Flame cells","Water vascular system","Nematocysts"],
+    oa:["نيفريديا","خلايا لهبية","جهاز وعائي مائي","خلايا لاسعة"],
+    a:1, h:"Flat + Flame cells = Platyhelminthes 🪱"
+  },
+  {
+    t:"🦑 Animal Phyla — الشعبات",
+    q:"Which phylum has a PSEUDOCOELOM (false body cavity)?",
+    qa:"أي شعبة تمتلك تجوفاً كاذباً (pseudocoelom)؟",
+    o:["Annelida","Mollusca","Nematoda","Arthropoda"],
+    oa:["الحلقية","الرخويات","الأسطوانية","مفصليات الأرجل"],
+    a:2, h:"Nematoda فقط عندها pseudocoelom — Round + Cuticle 🔵"
+  },
+  {
+    t:"🦑 Animal Phyla — الشعبات",
+    q:"Annelida (segmented worms) excrete waste through...?",
+    qa:"الديدان الحلقية تُخرج فضلاتها عبر...؟",
+    o:["Flame cells","Nematocysts","Nephridia","Water vascular system"],
+    oa:["خلايا لهبية","خلايا لاسعة","نيفريديا","جهاز وعائي مائي"],
+    a:2, h:"Annelida = Segments + True coelom + Nephridia 🪱"
+  },
+  {
+    t:"🦑 Animal Phyla — الشعبات",
+    q:"Which is the LARGEST phylum in the animal kingdom?",
+    qa:"أي شعبة هي الأكبر في المملكة الحيوانية؟",
+    o:["Mollusca","Arthropoda","Annelida","Echinodermata"],
+    oa:["الرخويات","مفصليات الأرجل","الحلقية","شوكيات الجلد"],
+    a:1, h:"Arthropoda = مفصليات = أكبر شعبة على الإطلاق 🦗"
+  },
+  {
+    t:"🦑 Animal Phyla — الشعبات",
+    q:"The water vascular system is a distinguishing feature of which phylum?",
+    qa:"الجهاز الوعائي المائي ميزة مميزة لأي شعبة؟",
+    o:["Mollusca","Cnidaria","Arthropoda","Echinodermata"],
+    oa:["الرخويات","اللاسعات","مفصليات الأرجل","شوكيات الجلد"],
+    a:3, h:"Echinodermata = نجم البحر + جهاز مائي + جلد شائك ⭐"
+  },
+  {
+    t:"🦑 Animal Phyla — الشعبات",
+    q:"The Sponge belongs to which phylum? It has NO true tissues.",
+    qa:"الإسفنج ينتمي لأي شعبة؟ وليس له أنسجة حقيقية.",
+    o:["Cnidaria","Porifera","Platyhelminthes","Annelida"],
+    oa:["اللاسعات","المسامية","الديدان المفلطحة","الحلقية"],
+    a:1, h:"Porifera = مسام في كل مكان + choanocytes 🟤"
+  },
+  {
+    t:"🦑 Animal Phyla — الشعبات",
+    q:"The Radula is a feeding organ found exclusively in which phylum?",
+    qa:"الرادولا عضو تغذية موجود حصرياً في أي شعبة؟",
+    o:["Arthropoda","Echinodermata","Mollusca","Annelida"],
+    oa:["مفصليات الأرجل","شوكيات الجلد","الرخويات","الحلقية"],
+    a:2, h:"Mollusca = Mantle (وشاح) + Radula + Shell (صدفة) 🐌"
+  },
+];
+
+let cur=0,score=0,answered=false;
+
+function renderProg(){
+  const el=document.getElementById('prog-bar');
+  el.innerHTML=ALL_Q.map((_,i)=>`<div class="p-dot ${i<cur?'done':i===cur?'active':''}"></div>`).join('');
+}
+
+function renderQ(){
+  if(cur>=ALL_Q.length){
+    const pct=Math.round(score/ALL_Q.length*100);
+    document.getElementById('quiz-box').innerHTML=`<div class="end-box">
+      <div class="big">${pct>=90?'🏆':pct>=70?'👍':'💪'}</div>
+      <div class="result">انتهى الاختبار!</div>
+      <div class="sub">نتيجتك: <span style="color:#58a6ff;font-weight:600">${score} / ${ALL_Q.length}</span> (${pct}%)</div>
+      <div style="font-size:13px;color:#7d8590;margin-bottom:16px">${pct>=90?'ممتاز! أنت جاهز للامتحان 💯':pct>=70?'كويس جداً، راجع الغلطات 🙂':'ذاكر تاني من الكروت وعود 💪'}</div>
+      <button class="btn btn-primary" onclick="restartQ()">← ابدأ من أول</button>
+    </div>`;
+    return;
+  }
+  answered=false;
+  const q=ALL_Q[cur];
+  document.getElementById('q-topic').textContent=q.t;
+  document.getElementById('q-score').textContent=`Score — النتيجة: ${score} / ${cur}`;
+  document.getElementById('feedback').textContent='';
+  renderProg();
+
+  document.getElementById('q-text').innerHTML=
+    `<div class="q-text-en">Q${cur+1}/${ALL_Q.length}: ${q.q}</div>`+
+    `<div class="q-text-ar">${q.qa}</div>`;
+
+  document.getElementById('q-opts').innerHTML=q.o.map((o,i)=>
+    `<button class="q-opt" onclick="answer(${i})">
+      <span class="opt-en">${o}</span>
+      <span class="opt-ar">${q.oa[i]}</span>
+    </button>`
+  ).join('');
+}
+
+function answer(i){
+  if(answered)return;
+  answered=true;
+  const q=ALL_Q[cur];
+  const btns=document.querySelectorAll('.q-opt');
+  btns[q.a].classList.add('correct');
+  if(i!==q.a){btns[i].classList.add('wrong');document.getElementById('feedback').textContent='💡 '+q.h;}
+  else{score++;document.getElementById('feedback').textContent='✅ صح! '+q.h;}
+  document.getElementById('q-score').textContent=`Score — النتيجة: ${score} / ${cur+1}`;
+}
+
+function nextQ(){cur++;renderQ();}
+function restartQ(){cur=0;score=0;renderQ();}
+
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const map={organelles:0,tissues:1,phyla:2,summary:3,quiz:4};
+  document.querySelectorAll('.tab')[map[id]].classList.add('active');
+}
+
+renderQ();
+</script>
+</body>
+</html>
